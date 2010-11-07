@@ -1,2 +1,58 @@
-Still in development :)
-Doc, gems and whatever may come soon.
+= AwesomeConf
+
+AwesomeConf is a really simple and powerful ruby gem built with performance in mind, it's the easiest and the cleanest way to add some configuration variables to any ruby project.
+
+It does almost nothing, it just give you the ability to create and use easily a configuration class for any of your ruby project.
+
+It's like an Hash but it's not an Hash.
+
+It's like an OpenStruct but it's not an OpenStruct, it's faster.
+
+It's like a bird, but it's not a bird.
+
+== AwesomeConf example
+
+  require 'awesome_conf'
+  
+  ac = AwesomeConf.new(:key => 'value')
+  ac.key # => 'value'
+  
+Ok, nothing is magic here, it can be any easy ruby tricks returning the value of this hash, like using method_missing[http://apidock.com/ruby/Kernel/method_missing] or using an OpenStruct[http://apidock.com/ruby/OpenStruct].
+But this is not, it's a real brand new method created dynamically returning a constant.
+
+<b>Why? For speed, and to be as faster as hash[:key] and two times faster than hash['key']</b> (at least using the classic ruby VM 1.8 and 1.9, with jRuby: hash['key'] is faster than everything !)
+
+So to conclude, AwesomeConf is just an easy replacement of conf['my_conf_variable'] to conf.my_conf_variable without <b>sacrificing performance</b>. (benchmarks are available in the specs)
+
+== Other use cases:
+
+=== AwesomeConf with YAML
+
+  AwesomeConf.new('path_to_a_yaml_file.yaml')
+
+
+=== AwesomeConf and strict mode
+
+  ac = AwesomeConf.new({:key => 'value'})
+  ac.key # => 'value'
+  ac.something_not_set # => nil
+  
+  # After enabling the strict mode:
+
+  ac.strict!
+  ac.something_not_set # Raise an exception
+
+=== AwesomeConf with inheritance
+
+  class MyConfClass < AwesomeConf
+  
+    def initialize(an_hash)
+      super(an_hash)
+    end
+    
+    ... your_awesome_custom_methods ...
+  
+  end
+
+
+Copyright (c) 2010 Guillaume Luccisano - g-mai|: guillaume.luccisano, released under the MIT license
