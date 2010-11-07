@@ -1,0 +1,10 @@
+key: value
+:sym_key: value
+:sym_key_s: :sym_value
+:hash:
+  k1: val
+  :k2: val2
+array:
+  - 1
+  - 2
+  - 3
